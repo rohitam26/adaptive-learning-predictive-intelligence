@@ -1,0 +1,43 @@
+name: Bug Report
+description: Create a report to help fix a bug or unexpected behavior
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please provide sufficient details to reproduce and resolve the problem.
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: A concise description of the bug
+      placeholder: e.g. Early risk prediction endpoint returns 500 when student ID has no prior clicks
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Detailed sequence of actions to reproduce the behavior
+      placeholder: |
+        1. Start backend with `uvicorn backend.app.main:app`
+        2. Send GET request to `/api/v1/students/999999/risk`
+        3. See error response
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen
+      placeholder: Expected a 404 response with a clear error payload or cold-start fallback.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS version, Python version, Node.js version, browser (if applicable)
+      placeholder: e.g. Windows 11, Python 3.11.18, Node.js 20.x
+    validations:
+      required: false

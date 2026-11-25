@@ -1,0 +1,37 @@
+name: Feature Request
+description: Suggest an enhancement or new capability for the platform
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Suggest an improvement or new feature for the Adaptive Learning and Predictive Intelligence Platform.
+  - type: input
+    id: title
+    attributes:
+      label: Feature Title
+      description: Short descriptive title
+      placeholder: e.g. Add GNN-based heterogeneous node classification
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Motivation
+      description: What problem does this solve or what use case does it address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Detailed explanation of how this should work
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative approaches or workarounds considered
+    validations:
+      required: false

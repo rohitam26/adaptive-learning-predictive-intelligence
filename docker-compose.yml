@@ -6,15 +6,15 @@ services:
     container_name: adaptive_learning_db
     restart: always
     environment:
-      POSTGRES_USER: mintx_user
-      POSTGRES_PASSWORD: mintx_secure_password_2026
-      POSTGRES_DB: adaptive_learning_platform
+      POSTGRES_USER: ${POSTGRES_USER:-mintx_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mintx_secure_password_2026}
+      POSTGRES_DB: ${POSTGRES_DB:-adaptive_learning_platform}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U mintx_user -d adaptive_learning_platform"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mintx_user} -d ${POSTGRES_DB:-adaptive_learning_platform}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -29,10 +29,17 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://mintx_user:mintx_secure_password_2026@db:5432/adaptive_learning_platform
-      SECRET_KEY: mintx-super-secret-jwt-signing-key-for-portfolio-2026
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mintx_user}:${POSTGRES_PASSWORD:-mintx_secure_password_2026}@db:5432/${POSTGRES_DB:-adaptive_learning_platform}
+      SECRET_KEY: ${SECRET_KEY:-mintx-super-secret-jwt-signing-key-for-portfolio-2026}
+      API_V1_STR: /api/v1
     ports:
       - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   frontend:
     build:
@@ -41,9 +48,11 @@ services:
     container_name: adaptive_learning_frontend
     restart: always
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     ports:
       - "80:80"
 
 volumes:
   postgres_data:
+    driver: local

@@ -1,0 +1,20 @@
+# Gitleaks Secret Scanner Configuration
+title = "Adaptive Learning & Predictive Intelligence Gitleaks Config"
+
+[extend]
+# Inherit default baseline detection rules
+useDefault = true
+
+[allowlist]
+description = "Global allowlists for synthetic test seeds and public documentation"
+paths = [
+    '''backend/tests/.*''',
+    '''\.env\.example$''',
+    '''docs/.*''',
+    '''README\.md$'''
+]
+regexes = [
+    '''mintx-super-secret-jwt-signing-key-for-portfolio-2026''',
+    '''mintx_secure_password_2026''',
+    '''Pass123!'''
+]

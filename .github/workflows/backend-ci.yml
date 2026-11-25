@@ -1,0 +1,42 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend-qa:
+    name: Lint, Type Check & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: |
+          uv sync
+
+      - name: Code Quality (Ruff Lint)
+        run: |
+          uv run ruff check backend ml
+
+      - name: Code Formatting (Ruff Format Check)
+        run: |
+          uv run ruff format --check backend ml
+
+      - name: Run Pytest Suite
+        run: |
+          uv run pytest backend/tests -v --durations=10
