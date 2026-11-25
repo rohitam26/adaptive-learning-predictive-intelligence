@@ -45,7 +45,6 @@ reg_payload = {
     "password": "Password123!",
     "full_name": "Test Verify User",
     "role": "student",
-    "student_id": 999123,
 }
 r3 = client.post("/api/v1/auth/register", json=reg_payload)
 results.append(

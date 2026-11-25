@@ -13,7 +13,7 @@ class UserRegister(BaseModel):
     password: str
     full_name: str
     role: str | None = "student"
-    student_id: int | None = 100001
+    student_id: int | None = None
 
 
 class UserLogin(BaseModel):

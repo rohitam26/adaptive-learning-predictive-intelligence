@@ -191,27 +191,39 @@ export const AdminOverviewView: React.FC = () => {
             <div className="grid grid-cols-3 gap-3 text-center">
               <div className="p-2 rounded bg-navy-900 border border-slate-800">
                 <p className="text-[10px] text-slate-400 uppercase">Precision@5</p>
-                <p className="font-mono font-bold text-teal-400 mt-1">{graph?.ranking_metrics?.['precision@5']}</p>
+                <p className="font-mono font-bold text-teal-400 mt-1">
+                  {(graph?.ranking_metrics || graph?.unconstrained_ranking_metrics)?.['precision@5'] ?? 'N/A'}
+                </p>
               </div>
               <div className="p-2 rounded bg-navy-900 border border-slate-800">
                 <p className="text-[10px] text-slate-400 uppercase">Recall@5</p>
-                <p className="font-mono font-bold text-teal-400 mt-1">{graph?.ranking_metrics?.['recall@5']}</p>
+                <p className="font-mono font-bold text-teal-400 mt-1">
+                  {(graph?.ranking_metrics || graph?.unconstrained_ranking_metrics)?.['recall@5'] ?? 'N/A'}
+                </p>
               </div>
               <div className="p-2 rounded bg-navy-900 border border-slate-800">
                 <p className="text-[10px] text-slate-400 uppercase">NDCG@5</p>
-                <p className="font-mono font-bold text-cyan-400 mt-1">{graph?.ranking_metrics?.['ndcg@5']}</p>
+                <p className="font-mono font-bold text-cyan-400 mt-1">
+                  {(graph?.ranking_metrics || graph?.unconstrained_ranking_metrics)?.['ndcg@5'] ?? 'N/A'}
+                </p>
               </div>
               <div className="p-2 rounded bg-navy-900 border border-slate-800">
                 <p className="text-[10px] text-slate-400 uppercase">Precision@10</p>
-                <p className="font-mono font-bold text-teal-400 mt-1">{graph?.ranking_metrics?.['precision@10']}</p>
+                <p className="font-mono font-bold text-teal-400 mt-1">
+                  {(graph?.ranking_metrics || graph?.unconstrained_ranking_metrics)?.['precision@10'] ?? 'N/A'}
+                </p>
               </div>
               <div className="p-2 rounded bg-navy-900 border border-slate-800">
                 <p className="text-[10px] text-slate-400 uppercase">Recall@10</p>
-                <p className="font-mono font-bold text-teal-400 mt-1">{graph?.ranking_metrics?.['recall@10']}</p>
+                <p className="font-mono font-bold text-teal-400 mt-1">
+                  {(graph?.ranking_metrics || graph?.unconstrained_ranking_metrics)?.['recall@10'] ?? 'N/A'}
+                </p>
               </div>
               <div className="p-2 rounded bg-navy-900 border border-slate-800">
                 <p className="text-[10px] text-slate-400 uppercase">NDCG@10</p>
-                <p className="font-mono font-bold text-cyan-400 mt-1">{graph?.ranking_metrics?.['ndcg@10']}</p>
+                <p className="font-mono font-bold text-cyan-400 mt-1">
+                  {(graph?.ranking_metrics || graph?.unconstrained_ranking_metrics)?.['ndcg@10'] ?? 'N/A'}
+                </p>
               </div>
             </div>
           </div>

@@ -271,6 +271,12 @@ class MLService:
         }
 
     def get_models_status(self) -> dict[str, Any]:
+        graph_data = dict(self.graph_metrics)
+        if "ranking_metrics" not in graph_data:
+            graph_data["ranking_metrics"] = self.graph_metrics.get(
+                "unconstrained_ranking_metrics", {}
+            )
+
         return {
             "champion_risk_model": {
                 "name": self.ml_comparison["best_model"],
@@ -280,6 +286,6 @@ class MLService:
             },
             "ml_models": self.ml_comparison["comparison"],
             "deep_learning_models": self.dl_metrics,
-            "graph_learning": self.graph_metrics,
+            "graph_learning": graph_data,
             "active_version": "1.0.0",
         }
