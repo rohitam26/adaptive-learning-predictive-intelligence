@@ -5,7 +5,7 @@
     "student_nodes": 3500,
     "resource_nodes": 581
   },
-  "ranking_metrics": {
+  "unconstrained_ranking_metrics": {
     "precision@5": 0.0096,
     "recall@5": 0.0065,
     "ndcg@5": 0.0081,
@@ -15,5 +15,40 @@
     "precision@20": 0.0108,
     "recall@20": 0.0325,
     "ndcg@20": 0.0189
+  },
+  "course_filtered_benchmark": {
+    "lightgcn": {
+      "precision@5": 0.0664,
+      "recall@5": 0.0565,
+      "ndcg@5": 0.0698,
+      "precision@10": 0.0628,
+      "recall@10": 0.1073,
+      "ndcg@10": 0.0875,
+      "precision@20": 0.059,
+      "recall@20": 0.1972,
+      "ndcg@20": 0.1252
+    },
+    "popularity": {
+      "precision@5": 0.0728,
+      "recall@5": 0.057,
+      "ndcg@5": 0.0792,
+      "precision@10": 0.0684,
+      "recall@10": 0.1109,
+      "ndcg@10": 0.0944,
+      "precision@20": 0.0702,
+      "recall@20": 0.2287,
+      "ndcg@20": 0.1447
+    },
+    "random": {
+      "precision@5": 0.0712,
+      "recall@5": 0.0595,
+      "ndcg@5": 0.0727,
+      "precision@10": 0.0716,
+      "recall@10": 0.1227,
+      "ndcg@10": 0.0955,
+      "precision@20": 0.067,
+      "recall@20": 0.2277,
+      "ndcg@20": 0.1395
+    }
   }
 }

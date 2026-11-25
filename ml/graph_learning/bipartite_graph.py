@@ -207,6 +207,9 @@ class StudentResourceBipartiteGraph:
         embeddings, _ = self.compute_lightgcn_style_embeddings(train_graph)
         metrics = self.evaluate_ranking(embeddings, test_edges)
 
+        # Course-filtered candidate evaluation
+        course_filtered_metrics = self.evaluate_course_filtered(embeddings, test_edges)
+
         # Save graph metadata & evaluation
         output_metrics = {
             "graph_stats": {
@@ -219,7 +222,8 @@ class StudentResourceBipartiteGraph:
                     [n for n, d in self.graph.nodes(data=True) if d.get("node_type") == "resource"]
                 ),
             },
-            "ranking_metrics": metrics,
+            "unconstrained_ranking_metrics": metrics,
+            "course_filtered_benchmark": course_filtered_metrics,
         }
 
         # Persist embeddings for fast inference in backend
@@ -234,6 +238,102 @@ class StudentResourceBipartiteGraph:
         print("Graph pipeline finished successfully. Metrics:")
         print(json.dumps(output_metrics, indent=2))
         return output_metrics
+
+    def evaluate_course_filtered(
+        self, embeddings_dict: dict, test_edges: list, k_list: list = [5, 10, 20]
+    ):
+        df_vle = pd.read_csv("data/raw/vle.csv")
+        df_student_info = pd.read_csv("data/raw/studentInfo.csv")
+        df_student_vle = pd.read_csv("data/raw/studentVle.csv")
+
+        module_resources = df_vle.groupby("code_module")["id_site"].unique().to_dict()
+        pop_counts = df_student_vle.groupby("id_site")["id_student"].nunique().to_dict()
+
+        test_by_student = {}
+        for s, r in test_edges:
+            test_by_student.setdefault(s, set()).add(r)
+
+        results = {
+            "lightgcn": {f"p@{k}": [] for k in k_list},
+            "popularity": {f"p@{k}": [] for k in k_list},
+            "random": {f"p@{k}": [] for k in k_list},
+        }
+        for m in list(results):
+            for k in k_list:
+                results[m][f"r@{k}"] = []
+                results[m][f"ndcg@{k}"] = []
+
+        sampled_students = list(test_by_student.keys())[:250]
+        for s_node in sampled_students:
+            if s_node not in embeddings_dict:
+                continue
+            s_id = int(s_node.replace("stud_", ""))
+            true_items = {int(r.replace("res_", "")) for r in test_by_student[s_node]}
+            stud_modules = df_student_info[df_student_info["id_student"] == s_id][
+                "code_module"
+            ].unique()
+            if len(stud_modules) == 0:
+                continue
+
+            candidates = []
+            for mod in stud_modules:
+                candidates.extend(module_resources.get(mod, []))
+            candidates = list(set(candidates))
+            if len(candidates) < 10:
+                continue
+
+            true_in_course = true_items.intersection(set(candidates))
+            if len(true_in_course) == 0:
+                continue
+
+            s_emb = embeddings_dict[s_node]
+
+            # LightGCN ranking
+            def get_score(site_id, s_vec=s_emb):
+                r_emb = embeddings_dict.get(f"res_{site_id}")
+                return float(np.dot(s_vec, r_emb)) if r_emb is not None else -999.0
+
+            lg_ranked = sorted(candidates, key=get_score, reverse=True)
+            pop_ranked = sorted(candidates, key=lambda x: pop_counts.get(x, 0), reverse=True)
+            np.random.seed(s_id)
+            rand_ranked = list(np.random.permutation(candidates))
+
+            rankings = {
+                "lightgcn": lg_ranked,
+                "popularity": pop_ranked,
+                "random": rand_ranked,
+            }
+
+            for m_name, ranked in rankings.items():
+                for k in k_list:
+                    top_k = ranked[:k]
+                    hits = [1 if item in true_in_course else 0 for item in top_k]
+                    n_hits = sum(hits)
+                    p = n_hits / k
+                    r = n_hits / len(true_in_course)
+                    dcg = sum(h / math.log2(idx + 2) for idx, h in enumerate(hits))
+                    idcg = sum(1.0 / math.log2(i + 2) for i in range(min(k, len(true_in_course))))
+                    ndcg = (dcg / idcg) if idcg > 0 else 0.0
+
+                    results[m_name][f"p@{k}"].append(p)
+                    results[m_name][f"r@{k}"].append(r)
+                    results[m_name][f"ndcg@{k}"].append(ndcg)
+
+        benchmark_summary = {}
+        for m_name in results:
+            benchmark_summary[m_name] = {}
+            for k in k_list:
+                benchmark_summary[m_name][f"precision@{k}"] = round(
+                    float(np.mean(results[m_name][f"p@{k}"])), 4
+                )
+                benchmark_summary[m_name][f"recall@{k}"] = round(
+                    float(np.mean(results[m_name][f"r@{k}"])), 4
+                )
+                benchmark_summary[m_name][f"ndcg@{k}"] = round(
+                    float(np.mean(results[m_name][f"ndcg@{k}"])), 4
+                )
+
+        return benchmark_summary
 
 
 if __name__ == "__main__":
