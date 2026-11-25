@@ -1,19 +1,19 @@
 {
   "graph_stats": {
-    "total_nodes": 4006,
-    "total_edges": 80696,
+    "total_nodes": 4081,
+    "total_edges": 115529,
     "student_nodes": 3500,
-    "resource_nodes": 506
+    "resource_nodes": 581
   },
   "ranking_metrics": {
-    "precision@5": 0.0104,
-    "recall@5": 0.0112,
-    "ndcg@5": 0.0139,
-    "precision@10": 0.0112,
-    "recall@10": 0.0255,
-    "ndcg@10": 0.0192,
-    "precision@20": 0.009,
-    "recall@20": 0.0401,
-    "ndcg@20": 0.0248
+    "precision@5": 0.0096,
+    "recall@5": 0.0065,
+    "ndcg@5": 0.0081,
+    "precision@10": 0.01,
+    "recall@10": 0.016,
+    "ndcg@10": 0.0115,
+    "precision@20": 0.0108,
+    "recall@20": 0.0325,
+    "ndcg@20": 0.0189
   }
 }

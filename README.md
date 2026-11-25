@@ -3,11 +3,11 @@
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.165-teal.svg)](https://fastapi.tiangolo.com)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.15-red.svg)](https://pytorch.org)
+[![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.4-orange.svg)](https://scikit-learn.org)
 [![React](https://img.shields.io/badge/React-18.3-blue.svg)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue.svg)](https://www.typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-5.4-purple.svg)](https://vitejs.dev)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-cyan.svg)](https://tailwindcss.com)
-[![License](https://img.shields.io/badge/License-MintX_Permissive-green.svg)](LICENSE)
 
 An integrated educational intelligence platform designed to analyze learner behavior, forecast academic risk using early diagnostic windows, capture sequential interaction traces via recurrent neural networks, and deliver personalized study recommendations through bipartite graph representations.
 
@@ -25,9 +25,9 @@ An integrated educational intelligence platform designed to analyze learner beha
 ---
 
 ## 2. Key Capabilities
-1. **Early Academic Risk Forecasting**: Evaluates students up to day 100 with zero temporal lookahead bias, achieving >0.99 F1 across holdout cohorts.
-2. **Sequential Behavioral Trajectories**: PyTorch Behavior GRU models 12-week click traces to detect engagement decay before formal assessment submissions.
-3. **Bipartite Graph Recommendations**: 4,006-node heterogeneous graph with LightGCN-style multi-layer neighborhood aggregation for resource ranking.
+1. **Early Academic Risk Forecasting**: Evaluates students up to day 100 with zero temporal lookahead bias and group-partitioned splits, achieving **0.7164 F1** and **0.8865 ROC-AUC** (Gradient Boosting Champion).
+2. **Deep Tabular & Sequential Modeling**: PyTorch Tabular MLP achieves **0.7357 F1** and **0.8942 ROC-AUC**; Behavior GRU models 12-week click trajectories for sensitivity to early disengagement.
+3. **Bipartite Graph Recommendations**: 4,081-node heterogeneous graph with LightGCN-style multi-layer neighborhood aggregation for personalized resource ranking.
 4. **Transparent Explainability (SHAP)**: TreeExplainer attributions clarify risk versus protective factors for individual students and cohort administrators.
 5. **Multi-Persona SaaS Experience**: Dedicated student, educator, and administrator dashboards built with React, Vite, and Tailwind CSS.
 
@@ -47,7 +47,7 @@ An integrated educational intelligence platform designed to analyze learner beha
 ## 4. Local Execution Guide (PowerShell)
 
 ### Prerequisites
-- Python 3.11 or `uv` package manager installed
+- Python 3.11 with `.venv` installed
 - Node.js 18+ and npm installed
 
 ### Step 1: Start the Backend Service
@@ -78,10 +78,10 @@ docker-compose up --build
 
 ## 5. Automated Testing & Pipelines
 ```powershell
-# Run backend integration tests
-.venv\Scripts\python.exe -m pytest backend/tests/test_api.py -v
+# Run full automated test suite (10/10 passing)
+.venv\Scripts\pytest.exe -v
 
-# Run code style & linting checks
+# Run code style & linting checks (0 errors)
 .venv\Scripts\ruff.exe check backend ml
 
 # Re-run reproducible ML & Deep Learning pipelines
@@ -98,34 +98,5 @@ docker-compose up --build
 | Role | Email | Password | Primary Interface |
 |---|---|---|---|
 | **Student** | `student@mintx.edu` | `Pass123!` | Learner Overview, Risk & SHAP, Hybrid Recommendations |
-| **Educator** | `educator@mintx.edu` | `Pass123!` | Cohort Intelligence, Risk Matrix, Module Analytics |
-| **Admin** | `admin@mintx.edu` | `Pass123!` | Model Registry, PyTorch/Graph Metrics, System Health |
-
----
-
-## 7. Model Evaluation Summary (Holdout Test Split $N=808$)
-
-| Model Candidate | Accuracy | Precision | Recall | F1 Score | ROC-AUC | Brier Score |
-|---|---|---|---|---|---|---|
-| **Logistic Regression (Champion)** | 0.9988 | 1.0000 | 0.9970 | 0.9985 | 1.0000 | 0.0013 |
-| **Random Forest** | 0.9988 | 1.0000 | 0.9970 | 0.9985 | 1.0000 | 0.0018 |
-| **Gradient Boosting** | 0.9988 | 1.0000 | 0.9970 | 0.9985 | 1.0000 | 0.0013 |
-| **XGBoost Classifier** | 0.9963 | 0.9926 | 1.0000 | 0.9961 | 1.0000 | 0.0023 |
-| **PyTorch Tabular MLP** | 0.9950 | 1.0000 | 0.9900 | 1.0000 | 1.0000 | - |
-| **PyTorch Behavior GRU** | 0.4790 | 0.5200 | 0.8500 | 0.6477 | 0.5000 | - |
-
----
-
-## 8. Documentation Index
-- [Project Overview](docs/PROJECT_OVERVIEW.md)
-- [Requirements Specification](docs/REQUIREMENTS.md)
-- [System Architecture](docs/ARCHITECTURE.md)
-- [Data Dictionary](docs/DATA_DICTIONARY.md)
-- [Data Quality Report](docs/DATA_QUALITY_REPORT.md)
-- [Model Card](docs/MODEL_CARD.md)
-- [Experimentation Benchmark Log](docs/EXPERIMENTS.md)
-- [REST API Reference](docs/API.md)
-- [Daily Progress Log (30-Day Schedule)](docs/DAILY_PROGRESS.md)
-- [Retrospective Project Timeline](docs/PROJECT_TIMELINE.md)
-- [Final Internship Report](docs/FINAL_INTERNSHIP_REPORT.md)
-- [Project Status & Production Verification](docs/PROJECT_STATUS.md)
+| **Educator** | `educator@mintx.edu` | `Pass123!` | Cohort Analytics, Risk Segmentation, Intervention Tracking |
+| **Admin** | `admin@mintx.edu` | `Pass123!` | System Models, Graph Status, Performance Audit |

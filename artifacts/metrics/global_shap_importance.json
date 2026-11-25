@@ -1,65 +1,65 @@
 {
   "top_global_features": [
     {
-      "feature": "early_click_mean",
-      "importance": 3.4093,
-      "display_name": "Early Click Mean"
-    },
-    {
-      "feature": "total_clicks",
-      "importance": 2.3741,
-      "display_name": "Total Clicks"
-    },
-    {
-      "feature": "score_max",
-      "importance": 1.3873,
-      "display_name": "Score Max"
-    },
-    {
       "feature": "score_mean",
-      "importance": 0.7132,
+      "importance": 0.9439,
       "display_name": "Score Mean"
     },
     {
+      "feature": "assessments_taken",
+      "importance": 0.9194,
+      "display_name": "Assessments Taken"
+    },
+    {
       "feature": "clicks_per_active_day",
-      "importance": 0.2114,
+      "importance": 0.2547,
       "display_name": "Clicks Per Active Day"
     },
     {
-      "feature": "unique_resources",
-      "importance": 0.0415,
-      "display_name": "Unique Resources"
+      "feature": "total_clicks",
+      "importance": 0.2517,
+      "display_name": "Total Clicks"
     },
     {
-      "feature": "active_days",
-      "importance": 0.0172,
-      "display_name": "Active Days"
+      "feature": "early_click_mean",
+      "importance": 0.1659,
+      "display_name": "Early Click Mean"
     },
     {
-      "feature": "clicks_subpage",
-      "importance": 0.0085,
-      "display_name": "Clicks Subpage"
+      "feature": "mean_delay_days",
+      "importance": 0.1494,
+      "display_name": "Mean Delay Days"
+    },
+    {
+      "feature": "score_max",
+      "importance": 0.1316,
+      "display_name": "Score Max"
+    },
+    {
+      "feature": "score_min",
+      "importance": 0.1035,
+      "display_name": "Score Min"
+    },
+    {
+      "feature": "date_registration",
+      "importance": 0.1022,
+      "display_name": "Date Registration"
     },
     {
       "feature": "clicks_quiz",
-      "importance": 0.0015,
+      "importance": 0.0762,
       "display_name": "Clicks Quiz"
     },
     {
-      "feature": "clicks_resource",
-      "importance": 0.0013,
-      "display_name": "Clicks Resource"
+      "feature": "imd_band_code",
+      "importance": 0.0706,
+      "display_name": "Imd Band Code"
     },
     {
-      "feature": "score_std",
-      "importance": 0.0012,
-      "display_name": "Score Std"
-    },
-    {
-      "feature": "clicks_oucontent",
-      "importance": 0.0002,
-      "display_name": "Clicks Oucontent"
+      "feature": "clicks_url",
+      "importance": 0.0696,
+      "display_name": "Clicks Url"
     }
   ],
-  "baseline_value": -0.04093995690345764
+  "baseline_value": -0.8558530807495117
 }

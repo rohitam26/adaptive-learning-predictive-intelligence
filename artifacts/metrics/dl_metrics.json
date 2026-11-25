@@ -1,14 +1,19 @@
 {
   "mlp": {
     "model_name": "Tabular MLP (PyTorch)",
-    "accuracy": 0.995,
-    "f1": 1.0,
-    "roc_auc": 1.0
+    "accuracy": 0.8528,
+    "precision": 0.7046,
+    "recall": 0.7696,
+    "f1": 0.7357,
+    "roc_auc": 0.8942
   },
   "gru": {
     "model_name": "Behavior GRU (PyTorch)",
-    "accuracy": 0.479,
-    "f1": 0.6477,
-    "roc_auc": 0.5
+    "accuracy": 0.2663,
+    "precision": 0.2663,
+    "recall": 1.0,
+    "f1": 0.4205,
+    "roc_auc": 0.5,
+    "decision_threshold": 0.4
   }
 }

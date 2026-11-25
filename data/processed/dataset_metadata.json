@@ -1,9 +1,12 @@
 {
-  "total_samples": 4040,
-  "train_samples": 3232,
-  "test_samples": 808,
-  "risk_prevalence_train": 0.47896039603960394,
-  "risk_prevalence_test": 0.47896039603960394,
+  "total_samples": 4028,
+  "train_samples": 3213,
+  "test_samples": 815,
+  "unique_students_train": 2800,
+  "unique_students_test": 700,
+  "student_id_overlap": 0,
+  "risk_prevalence_train": 0.3028322440087146,
+  "risk_prevalence_test": 0.26625766871165646,
   "feature_columns": [
     "num_of_prev_attempts",
     "studied_credits",

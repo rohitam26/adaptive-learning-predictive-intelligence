@@ -1,84 +1,84 @@
 {
-  "best_model": "Logistic Regression",
-  "best_f1": 0.9987,
+  "best_model": "Gradient Boosting",
+  "best_f1": 0.7164,
   "comparison": {
     "Logistic Regression": {
       "model_name": "Logistic Regression",
-      "accuracy": 0.9988,
-      "precision": 0.9974,
-      "recall": 1.0,
-      "f1": 0.9987,
-      "roc_auc": 1.0,
-      "pr_auc": 1.0,
-      "brier_score": 0.0013,
+      "accuracy": 0.8466,
+      "precision": 0.75,
+      "recall": 0.6359,
+      "f1": 0.6883,
+      "roc_auc": 0.8919,
+      "pr_auc": 0.8163,
+      "brier_score": 0.1043,
       "confusion_matrix": [
         [
-          420,
-          1
+          552,
+          46
         ],
         [
-          0,
-          387
+          79,
+          138
         ]
       ]
     },
     "Random Forest": {
       "model_name": "Random Forest",
-      "accuracy": 0.9988,
-      "precision": 0.9974,
-      "recall": 1.0,
-      "f1": 0.9987,
-      "roc_auc": 1.0,
-      "pr_auc": 1.0,
-      "brier_score": 0.0018,
+      "accuracy": 0.8601,
+      "precision": 0.7943,
+      "recall": 0.6406,
+      "f1": 0.7092,
+      "roc_auc": 0.8853,
+      "pr_auc": 0.8054,
+      "brier_score": 0.1058,
       "confusion_matrix": [
         [
-          420,
-          1
+          562,
+          36
         ],
         [
-          0,
-          387
+          78,
+          139
         ]
       ]
     },
     "Gradient Boosting": {
       "model_name": "Gradient Boosting",
-      "accuracy": 0.9988,
-      "precision": 1.0,
-      "recall": 0.9974,
-      "f1": 0.9987,
-      "roc_auc": 1.0,
-      "pr_auc": 1.0,
-      "brier_score": 0.0013,
+      "accuracy": 0.8601,
+      "precision": 0.7784,
+      "recall": 0.6636,
+      "f1": 0.7164,
+      "roc_auc": 0.8865,
+      "pr_auc": 0.8118,
+      "brier_score": 0.1064,
       "confusion_matrix": [
         [
-          421,
-          0
+          557,
+          41
         ],
         [
-          1,
-          386
+          73,
+          144
         ]
       ]
     },
     "XGBoost": {
       "model_name": "XGBoost",
-      "accuracy": 0.9963,
-      "precision": 0.9923,
-      "recall": 1.0,
-      "f1": 0.9961,
-      "roc_auc": 1.0,
-      "pr_auc": 1.0,
-      "brier_score": 0.0023,
+      "accuracy": 0.8638,
+      "precision": 0.8046,
+      "recall": 0.6452,
+      "f1": 0.7161,
+      "roc_auc": 0.8927,
+      "pr_auc": 0.823,
+      "brier_score": 0.1024,
       "confusion_matrix": [
         [
-          418,
-          3
+          564,
+          34
         ],
         [
-          0,
-          387
+          77,
+          140
         ]
       ]
     }
