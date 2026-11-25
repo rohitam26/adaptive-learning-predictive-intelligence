@@ -96,7 +96,7 @@ export const StudentProfileView: React.FC<StudentProfileViewProps> = ({ studentI
             <div className="space-y-2 text-xs">
               <div className="flex justify-between py-1 border-b border-slate-800">
                 <span className="text-slate-400">Enrolled Modules:</span>
-                <span className="font-semibold text-teal-300">{profile?.modules.join(', ')}</span>
+                <span className="font-semibold text-teal-300">{profile?.modules?.join(', ') || 'N/A'}</span>
               </div>
               <div className="flex justify-between py-1 border-b border-slate-800">
                 <span className="text-slate-400">Total Credits Studied:</span>

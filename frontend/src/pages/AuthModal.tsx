@@ -28,19 +28,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         const res = await ApiClient.login(email, password);
         onSuccess(res);
       } else {
-        // Register then login
-        await fetch('/api/v1/auth/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            password,
-            full_name: fullName,
-            role,
-            student_id: 100001
-          })
+        if (role === 'admin') {
+          throw new Error('Administrator accounts cannot be registered publicly.');
+        }
+        const res = await ApiClient.register({
+          email,
+          password,
+          full_name: fullName,
+          role,
+          student_id: role === 'student' ? undefined : null,
         });
-        const res = await ApiClient.login(email, password);
         onSuccess(res);
       }
       onClose();
@@ -125,19 +122,33 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
-            <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
-              <div className="relative">
-                <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
-                <input
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full bg-navy-950 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"
-                  required
-                />
+            <>
+              <div>
+                <label className="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+                <div className="relative">
+                  <User className="w-4 h-4 text-slate-500 absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    className="w-full bg-navy-950 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"
+                    required
+                  />
+                </div>
               </div>
-            </div>
+
+              <div>
+                <label className="block text-xs font-medium text-slate-300 mb-1">Account Role</label>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value as any)}
+                  className="w-full bg-navy-950 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-teal-500"
+                >
+                  <option value="student">Student</option>
+                  <option value="educator">Educator</option>
+                </select>
+              </div>
+            </>
           )}
 
           <div>
@@ -180,7 +191,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         <div className="mt-4 text-center">
           <button
             type="button"
-            onClick={() => setIsLogin(!isLogin)}
+            onClick={() => {
+              if (role === 'admin') setRole('student');
+              setIsLogin(!isLogin);
+            }}
             className="text-xs text-teal-400 hover:underline"
           >
             {isLogin ? "Need a new account? Register" : "Already registered? Sign In"}

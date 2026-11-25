@@ -23,18 +23,18 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
     async function loadData() {
       setLoading(true);
       try {
-        const [profData, riskData, perfData, engData, recData] = await Promise.all([
+        const [profRes, riskRes, perfRes, engRes, recRes] = await Promise.allSettled([
           ApiClient.getStudentProfile(studentId),
           ApiClient.getStudentRisk(studentId),
           ApiClient.getStudentPerformance(studentId),
           ApiClient.getStudentEngagement(studentId),
           ApiClient.getStudentRecommendations(studentId)
         ]);
-        setProfile(profData);
-        setRisk(riskData);
-        setPerf(perfData);
-        setEng(engData);
-        setRecs(recData);
+        if (profRes.status === 'fulfilled') setProfile(profRes.value);
+        if (riskRes.status === 'fulfilled') setRisk(riskRes.value);
+        if (perfRes.status === 'fulfilled') setPerf(perfRes.value);
+        if (engRes.status === 'fulfilled') setEng(engRes.value);
+        if (recRes.status === 'fulfilled') setRecs(recRes.value);
       } catch (err) {
         console.error('Failed to load student dashboard:', err);
       } finally {
@@ -66,7 +66,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
                 Student ID #{studentId}
               </span>
               <span className="text-xs text-slate-400">
-                Enrolled Modules: {profile?.modules.join(', ')}
+                Enrolled Modules: {profile?.modules?.join(', ') || 'N/A'}
               </span>
             </div>
             <h1 className="text-2xl font-bold text-white tracking-tight">
@@ -107,10 +107,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
             <TrendingUp className="w-4 h-4 text-teal-400" />
           </div>
           <p className="text-2xl font-bold text-white mt-2">
-            {perf?.mean_score.toFixed(1)}%
+            {(perf?.mean_score ?? 0).toFixed(1)}%
           </p>
           <p className="text-[11px] text-slate-500 mt-1">
-            Across {perf?.assessments_completed} completed assessments
+            Across {perf?.assessments_completed ?? 0} completed assessments
           </p>
         </div>
 
@@ -120,10 +120,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
             <Activity className="w-4 h-4 text-cyan-400" />
           </div>
           <p className="text-2xl font-bold text-white mt-2">
-            {eng?.total_clicks.toLocaleString()}
+            {eng?.total_clicks?.toLocaleString() ?? 0}
           </p>
           <p className="text-[11px] text-slate-500 mt-1">
-            {eng?.clicks_per_active_day} clicks / active day ({eng?.active_days} days)
+            {eng?.clicks_per_active_day ?? 0} clicks / active day ({eng?.active_days ?? 0} days)
           </p>
         </div>
 
@@ -133,7 +133,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
             <BookOpen className="w-4 h-4 text-teal-300" />
           </div>
           <p className="text-2xl font-bold text-white mt-2">
-            {eng?.unique_resources_accessed}
+            {eng?.unique_resources_accessed ?? 0}
           </p>
           <p className="text-[11px] text-slate-500 mt-1">
             Distinct course materials accessed
@@ -149,7 +149,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
             {((risk?.confidence || 0) * 100).toFixed(1)}%
           </p>
           <p className="text-[11px] text-slate-500 mt-1">
-            Champion: {risk?.model_name}
+            Champion: {risk?.model_name || 'Gradient Boosting'}
           </p>
         </div>
       </div>

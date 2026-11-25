@@ -61,10 +61,10 @@ export const RiskDashboardView: React.FC<RiskDashboardViewProps> = ({ studentId 
               <span className="text-xs text-slate-400">Assessed: {new Date(risk?.assessed_at || '').toLocaleDateString()}</span>
             </div>
             <h2 className="text-2xl font-bold text-white tracking-tight">
-              Academic Risk Tier: {risk?.risk_tier} ({(risk?.risk_probability! * 100).toFixed(1)}%)
+              Academic Risk Tier: {risk?.risk_tier || 'N/A'} ({((risk?.risk_probability ?? 0) * 100).toFixed(1)}%)
             </h2>
             <p className="text-xs text-slate-300 mt-1">
-              Evaluated using <span className="font-semibold text-white">{risk?.model_name}</span> with SHAP TreeExplainer attributions.
+              Evaluated using <span className="font-semibold text-white">{risk?.model_name || 'Champion Model'}</span> with SHAP TreeExplainer attributions.
             </p>
           </div>
 
@@ -72,7 +72,7 @@ export const RiskDashboardView: React.FC<RiskDashboardViewProps> = ({ studentId 
             <div className="px-4 py-2 rounded-xl bg-black/30 border border-white/10 text-center">
               <p className="text-[10px] text-slate-400 uppercase font-bold">Prediction Confidence</p>
               <p className="text-xl font-bold font-mono text-white">
-                {(risk?.confidence! * 100).toFixed(1)}%
+                {((risk?.confidence ?? 0) * 100).toFixed(1)}%
               </p>
             </div>
           </div>

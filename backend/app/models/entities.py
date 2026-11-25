@@ -17,7 +17,9 @@ class User(Base):
     hashed_password = Column(String(255), nullable=False)
     full_name = Column(String(255), nullable=False)
     role = Column(String(50), default="student")  # student, educator, admin
-    student_id = Column(Integer, nullable=True, index=True)  # links to OULAD student ID
+    student_id = Column(
+        Integer, unique=True, nullable=True, index=True
+    )  # links to OULAD student ID
     created_at = Column(DateTime, default=lambda: datetime.now(UTC))
 
 

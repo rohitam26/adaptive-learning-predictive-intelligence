@@ -13,7 +13,7 @@ from backend.app.api import analytics, auth, students
 from backend.app.core.config import settings
 from backend.app.core.security import get_password_hash
 from backend.app.database.session import SessionLocal, init_db
-from backend.app.models.entities import User
+from backend.app.models.entities import ModelMetadataRecord, User
 from backend.app.schemas.schemas import HealthResponse
 
 
@@ -55,6 +55,66 @@ def seed_database():
                     student_id=acc["student_id"],
                 )
                 db.add(user)
+
+        # Seed model metadata records if empty
+        if db.query(ModelMetadataRecord).count() == 0:
+            demo_models = [
+                {
+                    "model_type": "ML",
+                    "model_name": "Gradient Boosting",
+                    "version": "1.0.0",
+                    "f1_score": 0.7164,
+                    "roc_auc": 0.8865,
+                    "accuracy": 0.8242,
+                    "status": "production",
+                    "hyperparameters": {
+                        "n_estimators": 100,
+                        "learning_rate": 0.1,
+                        "max_depth": 5,
+                    },
+                },
+                {
+                    "model_type": "DL",
+                    "model_name": "Tabular MLP",
+                    "version": "1.0.0",
+                    "f1_score": 0.7368,
+                    "roc_auc": 0.8941,
+                    "accuracy": 0.8359,
+                    "status": "evaluated",
+                    "hyperparameters": {
+                        "hidden_layers": [128, 64, 32],
+                        "dropout": 0.3,
+                        "lr": 0.001,
+                    },
+                },
+                {
+                    "model_type": "DL",
+                    "model_name": "Sequential Behavior GRU",
+                    "version": "1.0.0",
+                    "f1_score": 0.5401,
+                    "roc_auc": 0.6552,
+                    "accuracy": 0.5113,
+                    "status": "experimental",
+                    "hyperparameters": {
+                        "hidden_dim": 64,
+                        "num_layers": 2,
+                        "dropout": 0.2,
+                    },
+                },
+                {
+                    "model_type": "Graph",
+                    "model_name": "LightGCN",
+                    "version": "1.0.0",
+                    "f1_score": None,
+                    "roc_auc": None,
+                    "accuracy": None,
+                    "status": "experimental",
+                    "hyperparameters": {"embedding_dim": 64, "num_layers": 3},
+                },
+            ]
+            for m in demo_models:
+                db.add(ModelMetadataRecord(**m))
+
         db.commit()
     finally:
         db.close()

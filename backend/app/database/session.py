@@ -11,7 +11,7 @@ from backend.app.core.config import settings
 # Handle SQLite vs PostgreSQL connection args
 connect_args = {}
 if settings.DATABASE_URL.startswith("sqlite"):
-    connect_args = {"check_same_thread": False}
+    connect_args = {"check_same_thread": False, "timeout": 30}
 
 engine = create_engine(settings.DATABASE_URL, connect_args=connect_args, pool_pre_ping=True)
 
@@ -29,3 +29,13 @@ def get_db():
 
 def init_db():
     Base.metadata.create_all(bind=engine)
+    if settings.DATABASE_URL.startswith("sqlite"):
+        from sqlalchemy import text
+
+        with engine.connect() as conn:
+            conn.execute(
+                text(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS uq_users_student_id ON users (student_id) WHERE student_id IS NOT NULL;"
+                )
+            )
+            conn.commit()
