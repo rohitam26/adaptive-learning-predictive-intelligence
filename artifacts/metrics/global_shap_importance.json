@@ -1,0 +1,65 @@
+{
+  "top_global_features": [
+    {
+      "feature": "early_click_mean",
+      "importance": 3.4093,
+      "display_name": "Early Click Mean"
+    },
+    {
+      "feature": "total_clicks",
+      "importance": 2.3741,
+      "display_name": "Total Clicks"
+    },
+    {
+      "feature": "score_max",
+      "importance": 1.3873,
+      "display_name": "Score Max"
+    },
+    {
+      "feature": "score_mean",
+      "importance": 0.7132,
+      "display_name": "Score Mean"
+    },
+    {
+      "feature": "clicks_per_active_day",
+      "importance": 0.2114,
+      "display_name": "Clicks Per Active Day"
+    },
+    {
+      "feature": "unique_resources",
+      "importance": 0.0415,
+      "display_name": "Unique Resources"
+    },
+    {
+      "feature": "active_days",
+      "importance": 0.0172,
+      "display_name": "Active Days"
+    },
+    {
+      "feature": "clicks_subpage",
+      "importance": 0.0085,
+      "display_name": "Clicks Subpage"
+    },
+    {
+      "feature": "clicks_quiz",
+      "importance": 0.0015,
+      "display_name": "Clicks Quiz"
+    },
+    {
+      "feature": "clicks_resource",
+      "importance": 0.0013,
+      "display_name": "Clicks Resource"
+    },
+    {
+      "feature": "score_std",
+      "importance": 0.0012,
+      "display_name": "Score Std"
+    },
+    {
+      "feature": "clicks_oucontent",
+      "importance": 0.0002,
+      "display_name": "Clicks Oucontent"
+    }
+  ],
+  "baseline_value": -0.04093995690345764
+}
