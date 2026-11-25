@@ -17,10 +17,10 @@ def test_recommendations_known_student(engine):
     """Verify recommendations for an enrolled student."""
     student_id = 100001
     recs = engine.recommend_for_student(student_id=student_id, top_n=5)
-    
+
     assert len(recs) <= 5
     assert len(recs) > 0
-    
+
     first = recs[0]
     assert "resource_id" in first
     assert "activity_type" in first
@@ -36,4 +36,8 @@ def test_recommendations_cold_start_fallback(engine):
 
     assert len(recs) > 0
     # Must provide popular fallbacks with transparent rationale
-    assert any("curriculum" in r.get("rationale", "").lower() or "recommended" in r.get("rationale", "").lower() for r in recs)
+    assert any(
+        "curriculum" in r.get("rationale", "").lower()
+        or "recommended" in r.get("rationale", "").lower()
+        for r in recs
+    )

@@ -55,6 +55,7 @@ def test_model_inference_and_calibration():
 
 def test_risk_tier_classification():
     """Verify risk probabilities map to reasonable risk categories."""
+
     def assign_tier(prob: float) -> str:
         if prob >= 0.70:
             return "Critical"
